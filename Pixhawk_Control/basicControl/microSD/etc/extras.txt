@@ -1,0 +1,27 @@
+commander stop
+
+#daemonTutorial start
+
+param set CBRK_RATE_CTRL 140253
+
+mixer load /dev/pwm_output0 /etc/mixers/IO_pass.main.mix
+
+pwm failsafe -c 1234 -p 900
+
+pwm arm
+
+#TestMotor start
+
+attitude_estimator_q start
+position_estimator_inav start
+
+#mavlink start -d /dev/ttyACM0
+#mavlink stream -d /dev/ttyACM0 -s HIGHRES_IMU -r 20
+#mavlink stream -d /dev/ttyACM0 -s ATTITUDE -r 20
+#mavlink stream -d /dev/ttyACM0 -s LOCAL_POSITION_NED -r 20
+
+# mavlink stop-all
+# mavlink start -d /dev/ttyS2
+# mavlink stream -d /dev/ttyS2 -s HIGHRES_IMU -r 20
+# mavlink stream -d /dev/ttyS2 -s ATTITUDE -r 20
+# mavlink stream -d /dev/ttyS2 -s LOCAL_POSITION_NED -r 20

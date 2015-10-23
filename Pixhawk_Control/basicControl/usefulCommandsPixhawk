@@ -1,0 +1,13 @@
+tone_alarm 1
+
+# to arm pwm:
+pwm arm
+# to test chanel 1 and 3 and set the pwm value to 1200 us
+pwm test -c 13 -p 1200
+
+# to exit
+ctrl a k
+
+# to test motors
+TestMotors start
+TestMotors stop

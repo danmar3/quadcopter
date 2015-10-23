@@ -1,0 +1,13 @@
+# Register the Application in NuttShell and build it
+
+emacs Firmware/makefiles/nuttx/config_px4fmu-v2_default.mk
+
+MODULES		+= examples/px4_simple_app
+
+make clean
+make px4fmu-v2_default -j4
+
+make upload px4fmu-v2_default -j4
+
+# To connect
+ screen /dev/ttyUSB0 57600 8N1
