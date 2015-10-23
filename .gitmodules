@@ -1,0 +1,3 @@
+[submodule "Pixhawk_Control/basicControl/Firmware"]
+	path = Pixhawk_Control/basicControl/Firmware
+	url = https://github.com/danmar3/Firmware.git
