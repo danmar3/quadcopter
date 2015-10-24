@@ -1,0 +1,72 @@
+STEPS WITH ODROID FOR DRONES
+
+-----------------------ODROID OS INSTALLATION---------------------
+-Ubuntu and Android are the official ones. We download the image of Ubuntu because we have more experience with it.
+From http://east.us.odroid.in/ubuntu_14.04lts/
+we download ubuntu-14.04.3lts-lubuntu-odroid-c1-20150811.img.xz
+
+-Extact the content .xz file using 7-Zip
+7z x ubuntu-14.04.3lts-lubuntu-odroid-c1-20150811.img.xz
+
+-Copy the file inside it with dd to SD card:
+sudo dd if=ubuntu-14.04.3lts-lubuntu-odroid-c1-20150811.img of=/dev/sdx bs=1M conv=fsync
+sync
+To know the name of the device sdx you can type cat /proc/partitions before and after inserting the card
+
+-By default the board tries to boot from eMMC card. Boot media selector pins (in ODROID board) are connected to tell the board that the boot device is the SD card.
+
+-Using GParted in a PC we grow the linux filesystem to the maximun possible to be able to use the whole SD capacity.
+
+-Tested first on SD card Maxell 8GB Class 4=> Didn´t work
+-Then tested on SD card Samsung EVO 16GB Class U1 (HC I)=> It works, Lubuntu boots properly and properly addapts to 1080 resolution of the screen of the smart TV. We have sound of the Smart TV through HDMI. Wired internet works well. 720 videos in Youtube are properly displayed. GIMP, GParted, Firefox are run simultaneously and the mouse moves smoothly. Wireless internet device EDUP is automatically detected and configured when plugged.
+
+Board network name, user name and user password are all: odroid
+
+ 
+
+
+---------------------CONNECT COMPUTER TO ODROID------------------
+To do that an Access Point (AP) is used and both Odroid and computer are connected to it (ODROID could be used as an AP to directly connect PC to ODROID. However using an external AP permits us to connect to more than one ODROID at a time. This could be a common situation in the future when talking to more than one drone at a time).
+
+Configure Netgear N750 as Access Point
+-Connect PC and Netgear 750 using Ethernet cable
+-Write http://www.routerlogin.net in browser
+-Use user:admin password:password to get access to router
+-In Wireless connection configure WPA2, SSID brobotRED password:dronquad.
+-Netgear N750 MAC=>A0:63:91:9C:9A:16 IP=>192.168.1.1. Broadcast IP=>192.168.1.255 and Mask=>255.255.255.0.
+-It has DHCP activated and starts giving the following IPs: 192.168.1.2, 192.168.1.3, 192.168.1.4,...
+
+Connect the computer to brobotRED. 
+-Start wireless, select brobotRED and write password. An IP is automatically given by Netgear N750.
+
+Connect ODROID to brobotRED:
+To ease connection to ODROID boards we put fix IP in them. Since computers are given first IP numbers of the network, we give the last ones to ODROID boards (to avoid conflict) starting in 192.168.1.200
+Using a screen, keyboard and mouse we set fixed IP:192.168.1.200 in first ODROID board. To do that we connect to brobotRED and an IP is given by DHCP. Then we disconnect, we modify (in StartButton->Preferences->Network Connections)IPv4 settings from DHCP to Manual and write: Address=>192.168.1.200 Netmask=>255.255.255.0 Gateway=>192.168.1.1
+(If wired connection is removed ODROID will directly connect to brobotRED).
+
+Connect from PC to Odroid Console using SSH. In Windows use Putty. In Linux use putty or directly from console:
+ssh [-l login_name] hostname | user@hostname [command ] 
+In our case
+ssh odroid@192.168.1.200
+
+Connect using remote desktop from PC to Odroid Desktop:
+-ODROID comes with the following vnc server installed: x11vcn.
+Write in ODROID console to run the vnc server: 
+x11vcn -display:0 or x11vnc -display:0 -passwd <here_your_password>
+Now any computer (Linux, Windows or MAC) connected to the brobotRED can have remote access to ODROID desktop using a VNC client. In my case I use vinagre (default in Debian 8) VNC client. I type:
+vinagre [remote_host_IP]:[display number] (and then ODROID desktop appears in PC). In our case the command is:
+vinagre 192.168.1.200:0
+
+
+---------------QUICK CONNECT ONCE ODROID IS CONFIGURED--------------
+Now it is possible to have full remote access to ODROID board.
+ -Power up the board.
+ -If Ethernet cable is unplugged the board automatically connects to brobotRED.
+ -From PC use SSH to connect ODROID console: ssh odroid@192.168.1.200
+ -From ODROID console run VNC server: x11vnc -display :0
+ -From another PC console launch VNC client: vinagre 192.168.1.200:0
+
+
+
+
+  
