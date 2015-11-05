@@ -1,8 +1,10 @@
 To synchronize with the contents in https://github.com/danmar3:
 -At the beginning:
-    -Install and set up GIt with your name and mail: https://help.github.com/articles/set-up-git/
-    -Open a Terminal and locate yourself in the folder you want to copy the github repository (lets call it GitShared). 
-    >>git clone https://github.com/danmar3/quadcopter (Copies quadcopter folder in GitSHared) 
+    -Install and set up GIt with your name and mail:
+     https://help.github.com/articles/set-up-git/
+    -Open a Terminal and locate yourself in the folder you want to cop
+     y the github repository (lets call it GitShared). 
+    >>git clone https://github.com/danmar3/quadcopter 
     -Then enter in the git submodule called Firmware and repeat
     >>cd quadcopter/Pixhawk_Control/basicControl/Firmware
     >>git clone https://github.com/danmar3/Firmware
@@ -17,15 +19,21 @@ Later, when we want to synchronize just do:
 Then you work in your computer. When you modify a file:
      >>git add file_name
 
-When you finish modifying files and want to do a "Save State" where you can come back later:
+When you finish modifying files and want to do a "Save State"
+where you can come back later:
      >>git commit -m "Message to other people about this commit"
 
-Finally, to save changes in online repository you do push. You have to be in the correct folder to do it (or you can specify origin and master). To push for quadcopter locate at GitShared/quadcopter folder. To push for Firmware locate at quadcopter/Pixhawk_Control/basicControl/Firmware.
+Finally, to save changes in online repository you do push. You have to
+be in the correct folder to do it (or you can specify origin and master).
+To push for quadcopter locate at GitShared/quadcopter folder. To push for
+Firmware locate at quadcopter/Pixhawk_Control/basicControl/Firmware.
 	 >>git push 
 
 Useful command to know status of a git repository:
 >>git status
-Using git status you know which files need add (red color), commit (green ones) and when push should be done (it tells you you are X commits ahead of master).
+Using git status you know which files need add (red color), commit
+(green ones) and when push should be done (it tells you you are X
+commits ahead of master).
 
 
     
