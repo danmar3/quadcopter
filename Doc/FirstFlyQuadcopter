@@ -32,7 +32,7 @@ To do so follow these instructions on Turnigy TGY 9x controller:
 1601: F.MODE=1 GEA=1
 1784: F.MODE=2 GEA=0
 1970: F.MODE=2 GEA=1
--Now we are going to mix channel 6 and channel 5. Go to ENU->FUNC SETTINGS->MIX<1 2 3>. Play with this menus until you have the frequencies written above. UPRATE is the modification of PIT when GEA=1 and F.MODE is in the position indicated by SW. SW indicates de position of F.MODE so we assign one F.MODE position to each MIX program. DOWNRATE is equal to UPRATE but when GEA=0. Our configuration was this (but can change for other controller because these are not very precise controllers):
+-Now we are going to mix channel 6 and channel 5. Go to MENU->FUNC SETTINGS->PROG<1 2 3>. Play with this menus until you have the frequencies written above. UPRATE is the modification of PIT when GEA=1 and F.MODE is in the position indicated by SW. SW indicates de position of F.MODE so we assign one F.MODE position to each MIX program. DOWNRATE is equal to UPRATE but when GEA=0. Our configuration was this (but can change for other controller because these are not very precise controllers):
 MIX1		MIX2		MIX3
 STATE:ACT	STATE:ACT	STATE:ACT
 MASTER:GEA	MASTER:GEA	MASTER:GEA
