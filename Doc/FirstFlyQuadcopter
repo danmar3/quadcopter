@@ -1,0 +1,53 @@
+--------------STEPS FOR FIRST FLY WITH QUADCOPTER------------
+After mounting the hardware. We did the following steps to fly it:
+
+-CONNECT RC: Following http://learnrobotix.com/uavs/quadcopter-build/pixhawk/connecting-turnigy9x-radio-pixhawk-flight-controller.html we install the ppm encoder to Turnigy 9x8cV2 receiver. Basically you have to connect the 8 cables of PPM encodeR to 8 channels in receiver. Data pin is on the side of the sticker on receiver. Then we connect ppm encoder to pixhawk using the RC pins of pixhawk. We put batteries on Turnigy 9X Controller and switched it on.
+
+-INSTALL A FLIGHT STATION PROGRAM
+There are 2:
+-Mission Planner for APM controller firmware.
+-QGroundControl for PX4 firmware.
+We use PX4 because its software architecture is simpler and more expandable than APMs one. However it is newer and less documented.
+We install qground control. 
+We install QGroundCOntrol in Linux following the instructions of the official web site. Basically, to install it on linux, we installed some dependencies, installed Qt and compiled the Qt QGroundCOntrol project using QtDesigner.
+
+-UPDATE FIRMWARE AND CALIBRATION. The easiest way is to use a control station program. There is:
+  We open qground control and we see that RC is detected. Following the video in Update Firmware & Calibrate section of https://pixhawk.org/users/first_steps we update the PX4 firmware and configure and calibrate the pixhawk.
+There are some comments to be done for calibration:
+-To program flight modes we were able to assign in the controller 6 different frequencies combining the positions of the 3 position interrupt F.MODE and the 2 position mode. How to program 6 frequencies in channel 6 to be able to change between 6 modes is explained below.
+-Position controlled mode, mission, return and loiter mode can only be achieved if GPS signal exists. Otherwise the Pixhawk don´t let you change the flying mode. To fly inside a building use manual or attitude control (they are similar, they difer only in throttle switch functioning).
+-After the finishing calibration some error appeared an I couldnt fly. It was solved clicking on "Telemetry Signal Timeout" and "Loiter at Home altitude for" in the security label on the QGroundControl Setup.
+Calibration is very important. It makes the difference between a copter being able to take off and other that don´t and that has a lot of drift when flying.
+
+-PROGRAM 6 FREQUERNCIES ON CHANNEL 6 OF TURNIGY 9X CONTROLLER
+This will be used to select from 6 different flight modes.
+To do so follow these instructions on Turnigy TGY 9x controller:
+-Go to MENU->FUNC SETTINGS->DISPLAY. In this window we see all channels in real time. We see that throttle is associated to PIT signal. PIT signal is by default going out through channel 6 and can be used to select from different flight modes.
+-Now go to MENU->FUNC SETTINGS->PIT/CV (or PIT curve). We see the relation between throttle and pit (pit=throttle by default). If we move F.MODE we have a different curve so we have 3 different curves depending on F.MODE. We disocciate pit from throttle and make it depend only on F.MODE switch. To do that place F.MODE in N position and set all percentages to 0%. Place F.MODE in 1 position and set all percentages to 50%. Place F.MODE in 2 position and set all percentages to 100%. Now if we come back to Display we see that PIT now depends only on F.MODE. Now we have three levels so we could select from 3 flight modes.
+-To select from 6 channels we mix the signal from channel 6 and the channel associated to other switch. We use GEAR, the switch on the to right corner of the controller. Go to MENU->FUNC SETTINGS->AUX-CH and place GEA in channel 5.
+-If connected to Pixhawk from PC, and PPM controller is well installed, we can see all RC signal values in QGroundCOntroller. Go to Widget->Analyze in QGroundCOntroller and select M1:RC_CHANNELS.chan6_raw. We can see the channel 6 values in real time. We see that channel 6 can span from 1052 to 1970 when varying the 3 positions that we have now. So we divide in 6 equdistant gaps the frequency range:
+1052: F.MODE=N GEA=0
+1235: F.MODE=N GEA=1
+1418: F.MODE=1 GEA=0
+1601: F.MODE=1 GEA=1
+1784: F.MODE=2 GEA=0
+1970: F.MODE=2 GEA=1
+-Now we are going to mix channel 6 and channel 5. Go to ENU->FUNC SETTINGS->MIX<1 2 3>. Play with this menus until you have the frequencies written above. UPRATE is the modification of PIT when GEA=1 and F.MODE is in the position indicated by SW. SW indicates de position of F.MODE so we assign one F.MODE position to each MIX program. DOWNRATE is equal to UPRATE but when GEA=0. Our configuration was this (but can change for other controller because these are not very precise controllers):
+MIX1		MIX2		MIX3
+STATE:ACT	STATE:ACT	STATE:ACT
+MASTER:GEA	MASTER:GEA	MASTER:GEA
+SLAVE:PIT	SLAVE:PIT	SLAVE:PIT
+OFFSET:0	OFFSET:0	SW:ID2
+UPRATE:44	UPRATE:32	CURVE: We set L,1,2 to 38% and 3,H to 80%
+DNRATE:0	DNRATE:13	
+SW:NOR		SW:ID1		
+
+-Check that every motor is running in the correct direction and it is well plugged into the Pixhawk inputs.
+From https://pixhawk.org/platforms/multicopters/start we find 
+the number, position and rotation of the rotors. To change rotation direction change two cables of the motors. To change number change connection of motor with pixhawk outputs to motors.
+
+-To take off put the drone in a solid surface. When trying to take off in grass it is more difficult because screws in the leg of the copter can be stucked in some plant and make the drone overturn.
+Switch on the drone and the controller. Set the controller on manual mode. If the calibration is OK it should start to fly and maintain stable in the air.
+
+
+
