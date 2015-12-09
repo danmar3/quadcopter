@@ -1,0 +1,14 @@
+INSTALL GIMBALL
+
+The Tarot T-2D gimbal mantains roll and pitch of a goPro camera.
+Assembly the gimbal using these instructions:
+https://www.youtube.com/watch?v=SCm1Yi8UbXM
+
+After assembly you should join drone and gimbal. With the basic kit you can attach it to the hexacopter Tarot TL68B01. It can be also attached to the quadcopter (not Iris+).  An special kit from 3DR comes with an special part that permits easy assembly to IRIS+ copter (with the basic gimbal from Tarot it is not possible).
+
+http://planner.ardupilot.com/wiki/common-tarot-gimbal/
+https://3drobotics.com/kb/installing-tarot-gimbal-iris/
+Those two websites explain what cables you need to connect:
+-Power: to a 7.4-14.8V source. Since Hexacopter has 22.2V or 5V a converter is needed. We used a DC converter to achieve 12V for the gimbal.If you connect power with the gimbal in the desired position it will mantain this position after initializing. When initializing yellow led. When initialized blue led.
+-Signal. This signal controls the pitch of the gimbal. Using the RC controller pitch can be modified during the flight. People connect this signal from gimbal pitch pins to the AUX1 output (white numbers in pixhawk) and the associate this output to a channel in the RC, tipically the one assigned to the Pit. TRIM knob using the menus in the RC controller. So they can modify the pitch angle of the gopro. There are a lot of tutorial for APM stack and Mission Planner. However we are using Px4 flight stack and QGroundController and there are no clear instructions on the web for them. Supposedly one has to change the parameter RC_MAP_AUX1 to map the imput from one Rc channel to the output AUX1. I was not able to do it.
+But I did a trick. I connected the signal pins of the gimbal directly to the channel 7 of the RC controller (before the PPM controller) and when moving Pit. trim the channel 7 (Pit Trim was associated to channel 7 using the RC controller menu) was signal varied its value and the gimbal started to move. IT WORKS! 

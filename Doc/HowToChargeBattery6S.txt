@@ -1,0 +1,9 @@
+-Switch on TeamTenergy Charger connecting the power supply to a wall plug.
+-Press Mode/Esc button several times and stop in Lipo BATT mode.
+-Press Enter/Start button to enter in the options of the mode.
+-With Status (Dec and Inc) buttons change the mode to Lipo BALANCE. BALANCE mode takes care of individual cells when charging.
+-Press Enter/Start to modify charging current. The Multistar 6S 22.V 10000mAh from Turnigy can charge at a maximum of 2A.We select 1.5A as charging current.
+-For the tension 22.2V(6S) is correct so it does not need modification.
+-Now connect the battery power plug to the power plug of the charger and the plug with 7 pins to its corresponding plug in the auxiliar board coming with the charger.
+-Press Enter/Start during 2 seconds and the device will scan the battery cells. After scanning it should print R6 S6. R is the result of the scanning and S the expected number of cells before scanning. If these numbers are different and different to 6 there is some problem.
+Finally press Enter/Start to start charging.
